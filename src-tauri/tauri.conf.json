@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "try-tauri",
+  "productName": "sanky",
   "version": "0.1.0",
-  "identifier": "com.vadmanuel.try-tauri",
+  "identifier": "com.vadmanuel.sanky",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "try-tauri",
+        "title": "sanky",
         "width": 800,
         "height": 600
       }

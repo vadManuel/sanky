@@ -5,7 +5,7 @@
         <div class="header-content">
           <h1 class="app-title">
             <el-icon><Connection /></el-icon>
-            gRPC Client
+            Sanky - gRPC Client (for now)
           </h1>
         </div>
       </el-header>

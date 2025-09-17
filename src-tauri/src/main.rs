@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    try_tauri_lib::run()
+    sanky_lib::run()
 }
