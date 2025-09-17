@@ -23,16 +23,6 @@ export function formatJson(
   }
 }
 
-export function isValidJson(jsonString: string): boolean {
-  if (!jsonString.trim()) return true;
-  try {
-    JSON.parse(jsonString);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 export function minifyJson(jsonString: string): JsonFormatResult {
   if (!jsonString.trim()) return { success: true, formatted: jsonString };
   try {

@@ -80,12 +80,6 @@ const handleSendMessage = (messageData: any) => {
   }
 };
 
-const handleMethodSelect = (serviceName: string, method: ServiceMethod) => {
-  selectedMethod.value = { ...method, serviceName };
-  const generatedSampleData = protoParser.generateSampleDataForMethod(method, protoParser.protoContent.value);
-  sampleData.value = JSON.stringify(generatedSampleData, null, 2);
-};
-
 // Keep sample data in sync when method or proto content changes
 watch([
   () => selectedMethod.value,

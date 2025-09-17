@@ -6,33 +6,6 @@ use tauri::State;
 compile_error!("Mobile builds are disabled for this app.");
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
-#[tauri::command]
-async fn grpc_list_services(address: String) -> Result<Vec<String>, String> {
-    let output = std::process::Command::new("grpcurl")
-        .arg("-plaintext")
-        .arg(address)
-        .arg("list")
-        .output()
-        .map_err(|e| format!("failed to spawn grpcurl: {}", e))?;
-
-    if output.status.success() {
-        let stdout = String::from_utf8_lossy(&output.stdout);
-        let services = stdout
-            .lines()
-            .map(|s| s.trim().to_string())
-            .filter(|s| !s.is_empty())
-            .collect();
-        Ok(services)
-    } else {
-        let stderr = String::from_utf8_lossy(&output.stderr);
-        Err(format!("grpcurl error: {}", stderr))
-    }
-}
 
 #[derive(serde::Deserialize)]
 struct GrpcInvokeParams {
@@ -128,13 +101,10 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![
-            greet,
-            grpc_list_services,
             grpc_invoke_unary,
             grpc_make_streaming_call,
             grpc_send_streaming_signal,
             grpc_send_streaming_message,
-            select_and_read_file,
             read_file_at_path,
             reflect_list_services,
             reflect_describe_service,
@@ -166,12 +136,6 @@ async fn grpc_send_streaming_message(
     params: grpc::SendMessageParams,
 ) -> Result<(), String> {
     send_streaming_message(streams.inner().clone(), params).await
-}
-
-#[tauri::command]
-async fn select_and_read_file() -> Result<(String, String), String> {
-    // Use plugin on frontend for picking, backend only reads path
-    Err("not implemented: use read_file_at_path instead".into())
 }
 
 #[tauri::command]

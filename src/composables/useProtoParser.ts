@@ -1,5 +1,4 @@
 import { computed, ref } from "vue";
-import { invoke } from "@tauri-apps/api/core";
 import type { Service, ServiceMethod } from "../types/grpc";
 
 export function useProtoParser() {
@@ -162,18 +161,5 @@ export function useProtoParser() {
     generateSampleDataFromProto,
     generateSampleDataForMethod,
     getMethodType,
-    async reflectListServices(address: string) {
-      return await invoke<string[]>("reflect_list_services", { address });
-    },
-    async reflectDescribeService(address: string, service: string) {
-      return await invoke<
-        Array<{
-          name: string;
-          input: string;
-          output: string;
-          streaming: string;
-        }>
-      >("reflect_describe_service", { address, service });
-    },
   };
 }
