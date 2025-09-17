@@ -1,20 +1,35 @@
-# Tauri + Vue + TypeScript
+# sanky – Self‑hostable API platform (desktop)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+An open‑source, self‑hostable API platform focused on gRPC first. This desktop app lets developers import `.proto` files or use server reflection to explore services, craft requests, and inspect responses in a clean, modern UI.
 
-## Recommended IDE Setup
+## Tech stack
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+- Frontend: Vue 3 + TypeScript, Element Plus, Pinia, Vue Router, Vite
+- Desktop shell: Tauri (Rust)
+- Backend bridge: Rust commands invoking `grpcurl` for gRPC (unary and streaming)
 
-## gRPC Client (minimal)
+## Prerequisites
 
-This app includes a minimal gRPC client UI backed by Rust commands:
+- Node.js and pnpm
+- Rust toolchain (cargo) for Tauri
+- Tauri system deps (see Tauri docs for your OS)
+- grpcurl available on PATH
 
-- `grpc_list_services(address: String)` lists services via server reflection (plaintext).
-- `grpc_invoke_unary({ address, full_method, request_json, proto_content?, insecure? })` invokes a unary RPC using `grpcurl` under the hood.
+## Run
 
-Notes:
+```bash
+pnpm install
+pnpm tauri dev
+```
 
-- Requires `grpcurl` installed and available on PATH.
-- By default, calls are plaintext (`-plaintext`). Provide `.proto` content if the target server does not expose reflection. The `.proto` is written to a temp file for the call and removed.
-- The Vue UI is intentionally minimal: enter `address`, list services, choose service/method, and send a JSON request. Response displays as JSON.
+## Build
+
+```bash
+pnpm install
+pnpm tauri build
+```
+
+## Notes
+
+- For servers without reflection, paste/import a `.proto`; the app writes a temp file for `grpcurl` and cleans it up after calls/streams.
+- Use fully‑qualified method names under the hood (package.Service.Method). The UI resolves this from your `.proto` automatically.
